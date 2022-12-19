@@ -1,0 +1,191 @@
+.navbar {
+    color: white;
+    padding: 0 50px;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent);
+    transition: 0.35s;
+    transform-origin: top center;
+}
+.scrolled {
+    background-color: var(--background-color);
+}
+.container {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.left img {
+    height: 70px;
+    width: 100px;
+    transform: translateY(10%);
+    margin-right: 40px;
+}
+
+.left span {
+    margin-right: 20px;
+    line-height: 2.5;
+    cursor: pointer;
+}
+
+.left span:hover {
+    color: var(--main-color);
+}
+
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.right img {
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.right .icon {
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 50px;
+    cursor: pointer;
+}
+
+.searchInput {
+    position: absolute;
+    height: 40px;
+    transition: 0.15s;
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    outline: none;
+    border-right: none;
+    padding: 5px 10px;
+    left: -250px;
+    border-left: 2px solid var(--main-color);
+    border-top: 1px solid var(--main-color);
+    border-bottom: 1px solid var(--main-color);
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.searchBox:hover .searchInput {
+    visibility: visible;
+    opacity: 1;
+    left: -250px;
+    width: 250px;
+}
+.searchInput::placeholder {
+    letter-spacing: 1px;
+}
+
+.profile .options {
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    transition: 0.3s;
+    flex-direction: column;
+    position: absolute;
+    background-color: var(--background-color);
+    padding: 10px 0;
+    border-radius: 4px;
+    border-top: 1px solid var(--main-color);
+    border-bottom: 1px solid var(--main-color);
+}
+
+.profile .options span {
+    display: block;
+    padding: 5px 10px;
+}
+.profile .options span:hover {
+    background-color: var(--main-color);
+}
+
+.profile:hover .options {
+    visibility: visible;
+    opacity: 1;
+}
+
+.navbarMobile {
+    display: none;
+    height: 50px;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5));
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.navbarMobile img {
+    height: 50px;
+    width: 100px;
+}
+
+@media (max-width: 540px) {
+    .navbar {
+        display: none;
+    }
+    .navbarMobile {
+        display: flex;
+    }
+    .profile {
+        width: 70px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-left: auto;
+    }
+    .navbarMobile .profile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+    }
+    .navbarMobile .options {
+        position: absolute;
+        bottom: -80px;
+    }
+    .navigation {
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.2s;
+        position: absolute;
+        width: inherit;
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.9),
+            rgba(0, 0, 0, 0.5)
+        );
+        bottom: 0;
+        left: 0;
+    }
+    .navigation span {
+        display: block;
+        height: 50px;
+        width: 100%;
+        padding: 5px 20px;
+        border-bottom: 1px solid var(--main-color);
+    }
+    .navigation.active {
+        visibility: visible;
+        opacity: 1;
+        bottom: -100px;
+    }
+}

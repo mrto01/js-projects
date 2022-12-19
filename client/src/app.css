@@ -1,0 +1,26 @@
+* {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: #fff;
+}
+:root {
+    --main-color: #e50914;
+    --background-color: #0b0b0b;
+}
+
+#root .swiper-button-next,
+#root .swiper-button-prev {
+    color: var(--main-color);
+    font-weight: 700;
+    width: 50px;
+    padding: 50px 0;
+    transform: translateY(-25px);
+}
+
+#root .swiper-button-next:hover,
+#root .swiper-button-prev:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,134 @@
+.featured {
+    height: 700px;
+    position: relative;
+    background-size: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+.category {
+    position: absolute;
+    top: 100px;
+    left: 50px;
+    font-size: 24px;
+    font-weight: 500;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.category select {
+    width: 100px;
+    margin-left: 20px;
+    background-color: var(--background-color);
+    color: white;
+    border: 1px solid white;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.featured img {
+    width: 100%;
+    height: 100%;
+}
+
+.info {
+    position: absolute;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    left: 50px;
+    bottom: 120px;
+    color: white;
+}
+
+.title {
+}
+
+.description {
+    margin: 20px 0;
+    line-height: 1.5;
+    color: #ccc;
+}
+
+.action {
+    display: flex;
+}
+.action .play,
+.action .more {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+}
+.action .play {
+    background-color: var(--main-color);
+    color: white;
+    transition: 0.2s;
+}
+.action .play:hover {
+    box-shadow: 0 0 3px var(--main-color), 0 0 6px var(--main-color),
+        0 0 9px var(--main-color);
+}
+
+.action .more {
+    margin-left: 20px;
+}
+
+.action .more svg path,
+.action .more span {
+    color: #333;
+}
+
+@media (max-width: 1024px) {
+    .featured {
+        height: 500px;
+    }
+    .info {
+        width: 50%;
+        bottom: 60px;
+    }
+    .description {
+        height: 150px;
+        display: -webkit-box;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 540px) {
+    .featured {
+        height: 300px;
+    }
+    .info {
+        width: 80%;
+        bottom: 15px;
+        left: 15px;
+    }
+    .action .play,
+    .action .more {
+        font-size: 14px;
+    }
+    .action .more {
+        background-color: aliceblue;
+    }
+    .description {
+        height: 50px;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-direction: vertical;
+        -webkit-line-clamp: 2;
+        margin: 10px 0;
+    }
+    .category {
+        left: 10px;
+    }
+    .title {
+        font-size: 24px;
+    }
+}
