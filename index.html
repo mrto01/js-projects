@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="grid.css">
+    <script type="module" src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+    <title>Todo-app</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+        *{
+            padding:0;
+            margin:0;
+            box-sizing:border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+        ::selection{
+            background-color:cyan;
+            color:#333;
+        }
+        body{
+            display:flex;
+            width:100vw;
+            height:100vh;
+            justify-content: center;
+            align-items: center;
+            background-color:#000;
+        }
+        .app{
+            width:500px;
+        }
+        .todo-option{
+            display:flex;
+            margin-bottom:10px;
+            justify-content:space-between;
+        }
+        .active{
+            background-color:cyan;
+            color:#000 !important;
+            box-shadow: 0 0 2px cyan, 0 0 4px cyan,0 0 6px cyan;
+        }
+        .todo-option div{
+            padding: 5px 10px;
+            border: 1px solid cyan;
+            color:#fff;
+            font-size:14px;
+            font-weight:bold;
+            letter-spacing:1px;
+            cursor:default;
+        }
+        .todo-create{
+            display:flex;
+            justify-content:space-between;
+        }
+        .input-form{
+            flex: 0 0 74.5%;
+            height:50px;
+            overflow: hidden;
+            position:relative;
+        }
+        .input-form span:nth-child(1){
+            display:block;
+            position:absolute;
+            width:100%;
+            height:1px;
+            top:0;
+            background:linear-gradient(90deg, transparent, cyan);
+            left:-100%;
+            animation:slide1 1s linear infinite;
+        }
+        @keyframes slide1{
+            0%{
+                left:-100%;
+            }
+            100%{
+               left:100%;
+            }
+        }
+        .input-form span:nth-child(2){
+            display:block;
+            position:absolute;
+            width:1px;
+            height:100%;
+            right:0;
+            top:-100%;
+            background:linear-gradient(180deg, transparent, cyan);
+            transform-origin: right 0;
+            transform:translateX(-100%);
+            animation:slide2 1s linear infinite;
+            animation-delay: 0.5s;
+        }
+        @keyframes slide2 {
+            0%{
+                top:-100%;
+            }
+            100%{
+                top:100%;
+            }
+        }
+        .input-form span:nth-child(3){
+            display:block;
+            position:absolute;
+            width:100%;
+            height:1px;
+            bottom:0;
+            background:linear-gradient(270deg, transparent, cyan);
+            right:-100%;
+            animation:slide3 1s linear infinite;
+        }
+        @keyframes slide3{
+            0%{
+                right:-100%;
+            }
+            100%{
+               right:100%;
+            }
+        }
+        .input-form span:nth-child(4){
+            display:block;
+            position:absolute;
+            width:1px;
+            height:100%;
+            left:1px;
+            bottom:-100%;
+            background:linear-gradient(360deg, transparent, cyan);
+            transform-origin: right 0;
+            transform:translateX(-100%);
+            animation:slide4 1s linear infinite;
+            animation-delay: 0.5s;
+        }
+        @keyframes slide4 {
+            0%{
+               bottom:-100%;
+            }
+            100%{
+               bottom:100%;
+            }
+        }
+        .input-form input{
+            height: 100%;
+            width:100%;
+            border:none;
+            outline:none;
+            background-color:#1a2228;
+            padding:10px;
+            color:cyan;
+        }
+        .input-form input::-webkit-input-placeholder{
+            font-size:14px;
+            color:cyan;
+            opacity:0.2s linear;
+        }
+        .add-btn{
+            flex:0 0 24.5%;
+            border:2px solid cyan;
+            background-color:transparent;
+            color:#fff;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:2px;
+            cursor:pointer;
+            transition:0.5s;
+            z-index:2;
+        }
+        .add-btn:hover{
+            background-color:cyan;
+            box-shadow: 0 0 4px cyan,0 0 8px cyan,0 0 12px cyan;
+            color:#040008;
+        }
+        .todo-list ul{
+            list-style:none;
+        }
+        .todo-item{
+            width:100%;
+            min-height: 50px;
+            border: 1px solid cyan;
+            margin-top:10px;
+            color:#fff;
+            padding:10px;
+            display:flex;
+            align-items:center;
+            position:relative;
+        }
+        .btn-control-todo-item{
+            position:absolute;
+            right:0;
+        }
+        .btn-control-todo-item button{
+            margin:0 5px;
+            height:30px;
+            min-width:40px;
+            cursor:pointer;
+            padding:0 4px;
+            border:none;
+            border-radius:5px;
+            font-weight: 700;
+            letter-spacing:1px;
+            opacity:0.8;
+            transition:0.2s;
+        }
+        .btn-control-todo-item button:hover{
+            opacity:1;
+        }
+        .hidden {
+            display:none !important;
+        }
+        .item-selection{
+            appearance: none;
+            min-width:20px;
+            height:20px;
+            border: 2px solid cyan;
+            margin-right:5px;
+            border-radius:50%;
+            transition:0.2s;
+        }
+        .item-selection:checked{
+            background-color:cyan;
+        }
+        .edit-btn{
+            background-color:#04d9ff;
+        }
+        .delete-btn{
+            background-color:#ff073a;
+        }
+        .action-select{
+            height:30px;
+            width:100%;
+            display:flex;
+            margin-top:10px;
+            align-items:center;
+            justify-content:flex-end;
+            animation:scaleY 0.3s linear;
+        }
+        @keyframes scaleY{
+            0%{
+                opacity:0;
+                height:0;
+            }
+            100%{
+                height:1;
+                opacity:1;
+            }
+        }
+        .action-select button{
+            margin-right:10px;
+            padding:3px 10px;
+            height:100%;
+            border:none;
+            color:#000;
+            cursor:pointer;
+            border-radius: 4px;
+            filter:brightness(70%);
+            transition:0.2s;
+        }
+        .action-select-all{
+            background-color:cyan;
+        }
+        .action-select button:hover{
+            filter:brightness(100%);
+        }
+        .action-delete{
+            background-color:#ff073a;
+        }
+        .action-complete{
+            background-color:#2fcc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="root">
+        <div class="app">
+            <div class="todo-option">
+                <div class="todo-total active">Items: 12</div>
+                <div class="todo-uncompleted">Uncompleted</div>
+                <div class="todo-uncompleted">Completed</div>
+                <div class="todo-selection ">Select </div>
+                <!-- <div class="todo-selectall">Select all</div> -->
+            </div>
+            <div class="todo-create">
+                <div class="input-form">
+                    <span class=""></span>
+                    <span class=""></span>
+                    <span class=""></span>
+                    <span class=""></span>
+                    <input type="text" name="todo" placeholder="Add item here...">
+                </div>
+                <button class="add-btn">Create</button>
+            </div>
+            <div class="todo-list">
+                <div class="action-select">
+                    <button class="action-select-all">All</button>
+                    <button class="action-delete">Delete</button>
+                    <button class="action-complete">Complete</button>
+                </div>
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        let initialState = [{
+            title:'learning redux',
+            complete:false
+        }]
+        const todoReducer = (state = initialState, action) => {
+            switch(action.type) {
+                case 'create':
+                    return [...state,{title: action.value,complete:false}]
+                default:
+                    return state
+            }
+        }
+        const store = Redux.createStore(todoReducer)
+        const render = ()=>{
+            const todoElement = store.getState().map((todo)=>{
+                return `<li class="todo-item">${todo.title}</li>`
+            })
+            document.querySelector('.todo-list ul').innerHTML = todoElement.join('')
+        }
+        render()
+        store.subscribe(render)
+        document.querySelector('.todo-create').addEventListener('keyup',(e)=>{
+            if(e.keyCode === 13){
+                store.dispatch({type: 'create',value:e.target.value})
+                e.target.value=null
+                e.target.focus()
+            }
+        })
+        console.log(Redux)
+    </script>
+</body>
+</html>
